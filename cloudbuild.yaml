@@ -5,5 +5,5 @@ steps:
   args: ['push', 'gcr.io/url-shsh/shsh-core-be']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'shsh-core-be', '--image', 'gcr.io/google.com/cloudsdktool/cloud-sdk', '--region', 'europe-west3', '--allow-unauthenticated', '--platform', 'managed']
+  args: ['run', 'deploy', 'shsh-core-be', '--image', 'gcr.io/google.com/cloudsdktool/cloud-sdk', '--region', 'europe-west3', '--allow-unauthenticated', '--platform', 'managed', '--update-secrets=/etc/secrets/recaptcha_secret_key=recaptcha_secret_key:latest']
 images: ['gcr.io/url-shsh/shsh-core-be']
