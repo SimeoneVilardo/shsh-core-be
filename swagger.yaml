@@ -23,8 +23,9 @@ paths:
           description: A successful response
           schema:
             type: object
+            
   /api/eren:
-    get:
+    post:
       summary: Eren API
       operationId: eren
       responses:
@@ -32,6 +33,20 @@ paths:
           description: A successful response
           schema:
             type: object
+      parameters:
+        - in: body
+          name: payload
+          schema:
+            type: object
+            required:
+              - token
+                url
+            properties:
+              token:
+                type: string
+              url:
+                type: string
+
   /api/mikasa:
     get:
       summary: Mikasa API
@@ -41,6 +56,7 @@ paths:
           description: A successful response
           schema:
             type: object
+            
 securityDefinitions:
   api_key:
     type: "apiKey"

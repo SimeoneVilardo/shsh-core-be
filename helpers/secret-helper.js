@@ -4,12 +4,15 @@ const secretHelper = {};
 
 secretHelper.captchaSecret = null;
 
+secretHelper.getSecret = async (name) => {
+    var secret = await client.accessSecretVersion({ name: name });
+    var payload = secret[0].payload.data.toString();
+    return payload;
+}
+
 secretHelper.getCaptchaSecret = async () => {
-    if (!secretHelper.captchaSecret) {
-        var secret = await client.accessSecretVersion({ name: 'projects/953951196959/secrets/recaptcha_secret_key/versions/latest' });
-        var payload = secret[0].payload.data.toString();
-        secretHelper.captchaSecret = payload;
-    }
+    if (!secretHelper.captchaSecret)
+        secretHelper.captchaSecret = await secretHelper.getSecret('projects/953951196959/secrets/recaptcha_secret_key/versions/latest');
     return secretHelper.captchaSecret;
 }
 
