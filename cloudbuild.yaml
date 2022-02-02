@@ -1,4 +1,9 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/url-shsh/shsh-core-be', '.' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/url-shsh/shsh-core-be']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'shsh-core-be', '--image', 'gcr.io/google.com/cloudsdktool/cloud-sdk', '--region', 'europe-west3', '--allow-unauthenticated', '--platform', 'managed']
 images: ['gcr.io/url-shsh/shsh-core-be']
