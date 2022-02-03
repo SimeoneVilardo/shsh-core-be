@@ -5,7 +5,7 @@ var secretHelper = require('../helpers/secret-helper');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-  res.json({ message: 'Hello APIs' });
+  res.json({ message: 'Hello (new) APIs' });
 });
 
 router.post('/eren', async function (req, res, next) {
