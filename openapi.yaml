@@ -1,0 +1,195 @@
+openapi: 3.0.1
+info:
+  title: Loro Piana Remote Data Capture API
+  description: Back End API for landing page
+  version: 1.0.0
+servers:
+- url: https://${endpoints_host}
+security:
+- api_key: []
+paths:
+  /api/language/{code}:
+    get:
+      summary: Get language translations
+      operationId: language
+      parameters:
+        - in: path
+          name: code
+          schema:
+            type: string
+          required: true
+          description: A language code is a code that assigns letters or numbers as identifiers or classifiers for languages
+      responses:
+        200:
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+  /api/selects:
+    get:
+      summary: Get values to popolate dropdown 
+      operationId: selects
+      responses:
+        200:
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Selects'
+  /api/check-token:
+    post:
+      summary: Check token validity and returns token decoded data
+      operationId: check-token
+      requestBody:
+        description: Salesforce token
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        200:
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecodedToken'
+  /api/form:
+    post:
+      summary: Submit form
+      operationId: form
+      requestBody:
+        description: User data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form'
+      responses:
+        200:
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: key
+      in: query
+  schemas:
+    Language:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties: true
+    SelectValues:
+      type: object
+      description: Map of dropdown name and dropdown values
+      properties:
+        country_region:
+          type: array
+          items:
+            type: string
+          description: An array of country/region
+        gender:
+          type: array
+          items:
+            type: string
+          description: An array of genders
+        nationality:
+          type: array
+          items:
+            type: string
+          description: An array
+        prefix:
+          type: array
+          items:
+            type: string
+          description: An array of phone prefixes
+        state_county:
+          type: array
+          items:
+            type: string
+          description: An array of state/county
+        title:
+          type: array
+          items:
+            type: string
+          description: An array of titles
+    Selects:
+      type: object
+      properties:
+        values:
+          $ref: '#/components/schemas/SelectValues'
+    DecodedToken:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Token validity
+        store:
+          type: string
+          description: Store in Salesforce
+    Form:
+      type: object
+      properties:
+        token:
+          type: string
+          
+        title:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dayOfBirth:
+          type: integer
+        monthOfBirth:
+          type: integer
+        yearOfBirth:
+          type: integer
+          nullable: true
+        nationality:
+          type: string
+        gender:
+          type: string
+        prefix:
+          type: string
+          nullable: true
+        phone:
+          type: integer
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        address:
+          type: string
+          nullable: true
+        zipCode:
+          type: integer
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        stateCounty:
+          type: string
+          nullable: true
+        regionState:
+          type: string
+          nullable: true
+        consentOne:
+          type: boolean 
+        consentTwo:
+          type: boolean 
+x-google-backend:
+  address: https://${endpoints_host}
+  protocol: h2
